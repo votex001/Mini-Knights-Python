@@ -4,9 +4,11 @@ from pygame.locals import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, path, spawn_pos, physics, surface):
         super().__init__()
-        self.SPEED = 2
+        self.SPEED = 5
         self.JUMP_LEFT = 2
-        self.JUMP_HEIGHT = 4
+        self.JUMP_HEIGHT = 8
+        self.Fall_SPEED = 0.4
+        self.MAX_FALL_SPEED = 5
 
         self.surface= surface
         self.physics = physics
@@ -39,11 +41,11 @@ class Player(pygame.sprite.Sprite):
         if self.moving_left:
             player_movement[0] -= self.SPEED
         player_movement[1] += self.player_y_momentum
-        self.player_y_momentum += 0.2
-        if self.player_y_momentum > 3:
-            self.player_y_momentum = 3
+        self.player_y_momentum += self.Fall_SPEED
+        if self.player_y_momentum > self.MAX_FALL_SPEED:
+            self.player_y_momentum = self.MAX_FALL_SPEED
 
-        player_rect, collisions = self.physics.move(self, player_movement)
+        player_rect, collisions = self.physics.move(self.rect, player_movement)
         if collisions['bottom']:
             self.players_jumps = self.JUMP_LEFT
         if collisions['top']:
@@ -53,18 +55,18 @@ class Player(pygame.sprite.Sprite):
 
         for event in events: # event loop
             if event.type == KEYDOWN:
-                if event.key == K_RIGHT:
+                if event.key == K_d:
                     self.moving_right = True
-                if event.key == K_LEFT:
+                if event.key == K_a:
                     self.moving_left = True
-                if event.key == K_UP:
+                if event.key == K_w:
                    if self.players_jumps >0:
                     self.player_y_momentum = -self.JUMP_HEIGHT
                     self.players_jumps -=1
             if event.type == KEYUP:
-                if event.key == K_RIGHT:
+                if event.key == K_d:
                     self.moving_right = False
-                if event.key == K_LEFT:
+                if event.key == K_a:
                     self.moving_left = False
         
 
