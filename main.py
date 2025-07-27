@@ -1,54 +1,46 @@
+# main.py
 import pygame
-import level_loader
-from player import Player
-from phisics import Physics
+from menu import create_menu, run_menu
+from game import init_game, run_game
+
+# Инициализация pygame
 pygame.init()
 
-# fps
-clock = pygame.time.Clock()
-
-#  Settings
+# Настройки
 SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 480
 GAME_NAME = "Mini Knights"
 GAME_ICON = "imgs/icon.png"
 
-
-# camera
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-camera_surface = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
-level = level_loader.SelectLevel("SelectLevel/maps/lvl1.tmx",camera_surface)
-
-# game name and icon
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption(GAME_NAME)
 icon = pygame.image.load(GAME_ICON)
 pygame.display.set_icon(icon)
 
-# move physics
-physics = Physics(level)
-# player
-player = Player("character/Soldier.png",level.get_spawn(),physics,camera_surface)
+# Логика меню
+def start_game():
+    global in_game
+    in_game = True  # Игровой процесс
 
+def quit_game():
+    global running
+    running = False  # Завершаем главный цикл
 
+# Создание меню
+menu = create_menu(screen, start_game, quit_game)
 
-play = True
+# Главный цикл
+running = True
+in_game = False
+while running:
+    if in_game:
+        # Инициализация игры
+        level, physics, player, camera_surface = init_game(screen)
 
-while play:
-# exit settings
-    events =pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            play = False
+        # Запуск игрового цикла
+        in_game = run_game(level, physics, player, camera_surface, screen)
+    else:
+        # Запуск меню
+        run_menu(screen, menu)
 
-
-
-
-    level.draw()
-    player.handle_input(events)
-    screen.blit(camera_surface, (0, 0))
-    pygame.display.update()
-    clock.tick(60)
-
-    # Draw walkable tiles for debugging purposes
-    # physics.draw_walkable_tiles(camera_surface)
-pygame.quit()
+pygame.quit()  # Корректное завершение игры
