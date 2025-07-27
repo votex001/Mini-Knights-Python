@@ -1,9 +1,9 @@
 import pygame
-from pygame.locals import * 
+from pygame.locals import *
 
-class Player:
-    def __init__(self,path,spawn_pos,physics,surface):
-        # Default Settings
+class Player(pygame.sprite.Sprite):
+    def __init__(self, path, spawn_pos, physics, surface):
+        super().__init__()
         self.SPEED = 2
         self.JUMP_LEFT = 2
         self.JUMP_HEIGHT = 4
@@ -14,7 +14,7 @@ class Player:
         # player Img and Rect
         self.img = pygame.image.load(path).convert_alpha()
         self.rect = self.img.get_rect()
-
+        self.mask = pygame.mask.from_surface(self.img)
 
         # on init spawn Player
         self.spawn_pos = spawn_pos
@@ -26,11 +26,7 @@ class Player:
         self.moving_left = False
         self.player_y_momentum = 0
 
-    # spawn player on spawn pos
     def spawn(self):
-        # for test draw player rect
-        # pygame.draw.rect(surface,(0,255,255),self.rect)
-
         self.x, self.y = self.spawn_pos if self.spawn_pos else (0, 0)
         self.rect.topleft = (self.x, self.y)
         self.surface.blit(self.img, self.rect)
@@ -47,7 +43,7 @@ class Player:
         if self.player_y_momentum > 3:
             self.player_y_momentum = 3
 
-        player_rect,collisions = self.physics.move(self.rect,player_movement)
+        player_rect, collisions = self.physics.move(self, player_movement)
         if collisions['bottom']:
             self.players_jumps = self.JUMP_LEFT
         if collisions['top']:

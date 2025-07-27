@@ -45,10 +45,10 @@ while play:
 
     level.draw()
     player.handle_input(events)
-    # physics.draw_walkable_tiles(camera_surface)
-# screen update and draws
     screen.blit(camera_surface, (0, 0))
     pygame.display.update()
     clock.tick(60)
 
+    # Draw walkable tiles for debugging purposes
+    # physics.draw_walkable_tiles(camera_surface)
 pygame.quit()
