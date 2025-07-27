@@ -24,7 +24,7 @@ def run_game(level, physics, player, camera_surface, screen):
                 if event.key == pygame.K_ESCAPE:
                     return False  # Возвращаемся в меню
 
-        # Игровая логика
+        # game logic
         level.draw()
         player.handle_input(events)
         
