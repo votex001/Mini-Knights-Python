@@ -38,7 +38,6 @@ class SelectLevel:
     def get_exit(self):
         for obj in self.tmx_data.objects:
             if obj.properties.get("exit") == True:
-                print("Exit found at:", obj.x, obj.y, obj.width, obj.height)
                 return (obj.x,obj.y, obj.width, obj.height)
         return None
     
