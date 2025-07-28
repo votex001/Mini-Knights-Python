@@ -1277,6 +1277,21 @@
     <property name="walk" type="bool" value="true"/>
    </properties>
   </tile>
+  <tile id="1198">
+   <properties>
+    <property name="deathzone" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1199">
+   <properties>
+    <property name="deathzone" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1200">
+   <properties>
+    <property name="deathzone" type="bool" value="true"/>
+   </properties>
+  </tile>
   <tile id="1259">
    <properties>
     <property name="walk" type="bool" value="true"/>
