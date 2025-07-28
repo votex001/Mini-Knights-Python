@@ -10,6 +10,7 @@ class SelectLevel:
         self.tile_width = self.tmx_data.tilewidth
         self.tile_height = self.tmx_data.tileheight
         self.spawn_pos = None
+        self.get_exit()
     
 
     def get_spawn(self):
@@ -35,4 +36,22 @@ class SelectLevel:
                     tile = self.tmx_data.get_tile_image_by_gid(gid)
                     if tile:
                         self.surface.blit(tile,(x*self.tile_width,y*self.tile_height))
-        
+    def get_exit(self):
+        for obj in self.tmx_data.objects:
+            if obj.properties.get("exit") == True:
+                print("Exit found at:", obj.x, obj.y, obj.width, obj.height)
+                return (obj.x,obj.y, obj.width, obj.height)
+        return None
+    
+    def get_lvl_deathzones(self):
+        deathzones = []
+        for layer in self.tmx_data.visible_layers:
+            if isinstance(layer, pytmx.TiledTileLayer):
+                for x, y, gid in layer:
+                    tile_props = self.tmx_data.get_tile_properties_by_gid(gid)
+                    if tile_props and tile_props.get("deathzone") == True:
+                        deathzones.append((x * self.tile_width, y * self.tile_height, self.tile_width, self.tile_height))
+        return deathzones
+
+    
+    
