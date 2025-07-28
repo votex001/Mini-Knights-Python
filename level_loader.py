@@ -10,7 +10,6 @@ class SelectLevel:
         self.tile_width = self.tmx_data.tilewidth
         self.tile_height = self.tmx_data.tileheight
         self.spawn_pos = None
-        self.get_exit()
     
 
     def get_spawn(self):
