@@ -1,19 +1,29 @@
-# game.py
 import pygame
 import level_loader
 from player import Player
 from phisics import Physics
+from menus.pause import create_pause, run_pause
 
-def init_game(screen):
+def init_game(screen,first_level,player_img):
     camera_surface = pygame.Surface((screen.get_width(), screen.get_height()))
-    level = level_loader.SelectLevel("SelectLevel/maps/lvl1.tmx", camera_surface)
+    level = level_loader.SelectLevel(first_level, camera_surface)
     physics = Physics(level)
-    player = Player("character/Soldier.png", level.get_spawn(), physics, camera_surface)
+    player = Player(player_img, level.get_spawn(), physics, camera_surface)
     return level, physics, player, camera_surface
 
 def run_game(level, physics, player, camera_surface, screen):
     clock = pygame.time.Clock()
-    running = True
+    running = True # main game loop
+    paused = False # pause state
+    go_to_menu = True # flag to return to menu
+    pause_menu = None #enable pause menu
+    def start_game():
+        nonlocal paused
+        paused = False # resume game
+    def quit_game():
+        nonlocal go_to_menu, running
+        go_to_menu = False #return false to exit the game
+        running = False #exit running loop
     while running:
         events = pygame.event.get()
         for event in events:
@@ -22,19 +32,27 @@ def run_game(level, physics, player, camera_surface, screen):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    return False  # Возвращаемся в меню
+                    #create pause menu every time escape is pressed
+                    pause_menu = create_pause(screen, start_game, quit_game)
+                    paused = not paused # toggle pause state
 
-        # game logic
-        level.draw()
-        player.handle_input(events)
-        
+        screen.fill((0, 0, 0))  # clear the screen
+        screen.blit(camera_surface, (0, 0))
+        # pause logic
+        if not paused:
+            pause_menu = None #clear pause state
+            # draw the level
+            level.draw()
+            # update the players movement
+            player.handle_input(events)
+        else:
+            player.moving_right = player.moving_left = False  # Reset movement flags
+            run_pause(screen, pause_menu) # run the pause menu
+            
         # collision detection for debugging
         # physics.draw_walkable_tiles(camera_surface)
 
-        screen.fill((0, 0, 0))  # Очистка экрана
-        screen.blit(camera_surface, (0, 0))
         pygame.display.update()
         clock.tick(60)
-    
-    return True
+    return go_to_menu
 

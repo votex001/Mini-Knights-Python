@@ -1,9 +1,9 @@
 # main.py
 import pygame
-from menu import create_menu, run_menu
+from menus.menu import create_menu, run_menu
 from game import init_game, run_game
 
-# Инициализация pygame
+
 pygame.init()
 
 # setup settings
@@ -11,6 +11,8 @@ SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 480
 GAME_NAME = "Mini Knights"
 GAME_ICON = "imgs/icon.png"
+FIRST_LVL = "SelectLevel/maps/lvl1.tmx"
+CHARACTER_IMG = "character/Soldier.png"
 
 # setup screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -21,23 +23,23 @@ pygame.display.set_icon(icon)
 # game button functions
 def start_game():
     global in_game
-    in_game = True  # Игровой процесс
+    in_game = True  # start the game
 
 def quit_game():
     global running
-    running = False  # Завершаем главный цикл
+    running = False  #stop main game loop
 
 # initialize menu
 menu = create_menu(screen, start_game, quit_game)
 
 # main loop
-running = True
-in_game = False
+running = True # main game loop
+in_game = False # game state
 # router
 while running:
     if in_game:
         # game init
-        level, physics, player, camera_surface = init_game(screen)
+        level, physics, player, camera_surface = init_game(screen,FIRST_LVL,CHARACTER_IMG)
 
         #  start game
         in_game = run_game(level, physics, player, camera_surface, screen)
@@ -45,4 +47,4 @@ while running:
         # menu loop
         run_menu(screen, menu)
 
-pygame.quit()  # Корректное завершение игры
+pygame.quit() 
