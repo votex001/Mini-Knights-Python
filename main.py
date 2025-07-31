@@ -13,6 +13,9 @@ GAME_NAME = "Mini Knights"
 GAME_ICON = "imgs/icon.png"
 FIRST_LVL = "SelectLevel/maps/lvl1.tmx"
 CHARACTER_IMG = "character/Soldier.png"
+CHARACTER_FOLDER = "character/animations"
+# {"folderName":(totalImgsNum,imgNum for Rect)}
+IMGS_MAP ={"idle":(6,1),'attack':(6,4),'die':(12,12),'jump':(16,1),'run':(8,1)}
 
 # setup screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -39,7 +42,7 @@ in_game = False # game state
 while running:
     if in_game:
         # game init
-        level, physics, player, camera_surface = init_game(screen,FIRST_LVL,CHARACTER_IMG)
+        level, physics, player, camera_surface = init_game(screen,FIRST_LVL,CHARACTER_FOLDER,IMGS_MAP)
 
         #  start game
         in_game = run_game(level, physics, player, camera_surface, screen)

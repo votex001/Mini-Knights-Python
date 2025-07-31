@@ -4,11 +4,11 @@ from player import Player
 from phisics import Physics
 from menus.pause import create_pause, run_pause
 
-def init_game(screen,first_level,player_img):
+def init_game(screen,first_level,player_folder,imgs_map):
     camera_surface = pygame.Surface((screen.get_width(), screen.get_height()))
     level = level_loader.SelectLevel(first_level, camera_surface)
     physics = Physics(level)
-    player = Player(player_img, level.get_spawn(), physics, camera_surface)
+    player = Player(player_folder,imgs_map, level.get_spawn(), physics, camera_surface)
     return level, physics, player, camera_surface
 
 def run_game(level, physics, player, camera_surface, screen):
@@ -46,7 +46,7 @@ def run_game(level, physics, player, camera_surface, screen):
             # update the players movement
             player.handle_input(events)
         else:
-            player.moving_right = player.moving_left = False  # Reset movement flags
+            player.moving_right = player.moving_left = player.attack = False  # Reset movement flags
             run_pause(screen, pause_menu) # run the pause menu
             
         # collision detection for debugging

@@ -1,8 +1,9 @@
 import pygame
 from pygame.locals import *
+from animation import Animation
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, path, spawn_pos, physics, surface):
+    def __init__(self, imgs_path,imgs_map, spawn_pos, physics, surface):
         super().__init__()
         self.SPEED = 5
         self.JUMP_LEFT = 2
@@ -12,10 +13,12 @@ class Player(pygame.sprite.Sprite):
 
         self.surface= surface
         self.physics = physics
+        self.last_move_side = "right"
 
         # player Img and Rect
-        self.img = pygame.image.load(path).convert_alpha()
-        self.rect = self.img.get_rect()
+        self.animation = Animation(imgs_path,imgs_map)
+        self.img,self.rect_img,_ = self.animation.next_frame('idle',self.last_move_side)
+        self.rect = self.rect_img.get_rect()
         self.mask = pygame.mask.from_surface(self.img)
 
         # on init spawn Player
@@ -26,6 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.players_jumps = self.JUMP_LEFT
         self.moving_right = False
         self.moving_left = False
+        self.attack = False
         self.player_y_momentum = 0
 
     def spawn(self):
@@ -33,8 +37,32 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = (self.x, self.y)
         self.surface.blit(self.img, self.rect)
 
+    def update_animation(self):
+        if self.attack:
+            self.img,_,last_frame = self.animation.next_frame("attack",self.last_move_side)
+            if last_frame:
+                self.attack = False
+        elif self.player_y_momentum < 0:
+            self.img,_,_ = self.animation.next_frame("jump",self.last_move_side)
+        elif  self.moving_right:
+            self.last_move_side = "right"
+            self.img,_,_ = self.animation.next_frame("run",self.last_move_side)
+        elif self.moving_left:
+            self.last_move_side = "left"
+            self.img,_,_ = self.animation.next_frame("run",self.last_move_side)
+        else:
+            self.img,_,_ = self.animation.next_frame("idle",self.last_move_side)
+        
+        # old_center = self.rect.center  # сохраняем позицию
+        # self.rect = self.rect_img.get_rect()
+        # self.rect.center = old_center  # восстанавливаем позицию
+        # self.mask = pygame.mask.from_surface(self.rect_img)
+
+
+
     # listen to player moves
     def handle_input(self,events):
+        self.update_animation()
         player_movement =[0,0]
         if self.moving_right:
             player_movement[0] += self.SPEED
@@ -55,6 +83,8 @@ class Player(pygame.sprite.Sprite):
 
         for event in events: # event loop
             if event.type == KEYDOWN:
+                if event.key == K_x:
+                    self.attack = True
                 if event.key == K_d:
                     self.moving_right = True
                 if event.key == K_a:
