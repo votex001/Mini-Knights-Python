@@ -7,6 +7,7 @@ from game import init_game, run_game
 pygame.init()
 
 # setup settings
+ZOOM = 3
 SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 480
 GAME_NAME = "Mini Knights"
@@ -45,7 +46,7 @@ while running:
         level, physics, player, camera_surface = init_game(screen,FIRST_LVL,CHARACTER_FOLDER,IMGS_MAP)
 
         #  start game
-        in_game = run_game(level, physics, player, camera_surface, screen)
+        in_game = run_game(level, physics, player, camera_surface, screen,ZOOM)
     else:
         # menu loop
         run_menu(screen, menu)
