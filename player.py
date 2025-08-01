@@ -57,9 +57,9 @@ class Player(pygame.sprite.Sprite):
         else:
             self.img,_,_ = self.animation.next_frame("idle",self.last_move_side)
         
-        # old_center = self.rect.center  # сохраняем позицию
+        # old_center = self.rect.center  
         # self.rect = self.rect_img.get_rect()
-        # self.rect.center = old_center  # восстанавливаем позицию
+        # self.rect.center = old_center 
         # self.mask = pygame.mask.from_surface(self.rect_img)
 
 
