@@ -38,6 +38,12 @@ class Player(pygame.sprite.Sprite):
         self.surface.blit(self.img, self.rect)
 
     def update_animation(self):
+        # anim side priority
+        if self.moving_left:
+            self.last_move_side = "left"
+        elif self.moving_right:
+            self.last_move_side = "right"
+            
         if self.attack:
             self.img,_,last_frame = self.animation.next_frame("attack",self.last_move_side)
             if last_frame:
@@ -45,10 +51,8 @@ class Player(pygame.sprite.Sprite):
         elif self.player_y_momentum < 0:
             self.img,_,_ = self.animation.next_frame("jump",self.last_move_side)
         elif  self.moving_right:
-            self.last_move_side = "right"
             self.img,_,_ = self.animation.next_frame("run",self.last_move_side)
         elif self.moving_left:
-            self.last_move_side = "left"
             self.img,_,_ = self.animation.next_frame("run",self.last_move_side)
         else:
             self.img,_,_ = self.animation.next_frame("idle",self.last_move_side)
