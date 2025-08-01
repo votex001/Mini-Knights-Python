@@ -18,6 +18,7 @@ def run_game(level, physics, player, camera_surface, screen,zoom):
     paused = False # pause state
     go_to_menu = True # flag to return to menu
     pause_menu = None #enable pause menu
+    camera = Camera(camera_surface,player.rect,screen,zoom)
     def start_game():
         nonlocal paused
         paused = False # resume game
@@ -38,7 +39,6 @@ def run_game(level, physics, player, camera_surface, screen,zoom):
                     paused = not paused # toggle pause state
 
         screen.fill((0, 0, 0))  # clear the screen
-        camera = Camera(camera_surface,player.rect,screen,zoom)
         scaled_surface,pos=camera.prepare_scaled_surface()
         
         screen.blit(scaled_surface,pos)
