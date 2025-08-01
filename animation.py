@@ -3,7 +3,7 @@ import pygame
 class Animation:
     def __init__(self, path = 'character/animations', imgs_map = None, frame_duration=50):
 
-        self.SCALE_FACTOR = 0.5
+        self.SCALE_FACTOR = 0.8
 
 
 
@@ -20,7 +20,7 @@ class Animation:
     def scale_img(self,img,lookSide ="right"):
         width, height = img.get_size()
         new_size = (int(width * self.SCALE_FACTOR), int(height * self.SCALE_FACTOR))
-        new_img = pygame.transform.smoothscale(img, new_size)
+        new_img = pygame.transform.scale(img, new_size)
         if lookSide == "left": 
             new_img = pygame.transform.flip(new_img,True,False)
         return new_img
@@ -40,7 +40,7 @@ class Animation:
             frame = self.scale_img(pygame.image.load(f'{self.path}/{animation_name}/{i+1}.png').convert_alpha(), lookSide)
             frames.append(frame)
 
-        rect_frame = frames[rect_frame_num]  # Получаем нужный кадр из уже загруженных
+        rect_frame = frames[rect_frame_num] 
         self.cashed_frames[cache_key] = (frames, rect_frame)
 
         return frames, rect_frame
