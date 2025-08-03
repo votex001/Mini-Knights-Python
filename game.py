@@ -51,7 +51,7 @@ def run_game(level, physics, player, camera_surface, screen,zoom):
             # update the players movement
             player.handle_input(events)
         else:
-            player.moving_right = player.moving_left = player.attack = False  # Reset movement flags
+            player.reset_moves()  # Reset movement flags
             run_pause(screen, pause_menu) # run the pause menu
             
         # collision detection for debugging
