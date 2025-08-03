@@ -16,7 +16,7 @@ class Camera:
             self.camera_surface, 
             (self.camera_surface.get_width() * self.zoom, self.camera_surface.get_height() * self.zoom))
         
-
+        # if to put this params on camera player will be on the center 
         player_pos_x = (-self.player_rect.x * self.zoom) + self.screen.get_width() / 2
         player_pos_y = (-self.player_rect.y*self.zoom)+self.screen.get_height()/2
 
@@ -43,9 +43,11 @@ class Camera:
         if abs(dif_y) < min_px:
             self.camera_pos[1] = player_pos_y
         else:
-            self.camera_pos[1] += dif_y * smooth_factor         
-
-        self.camera_pos[0] = min(0,max(self.camera_pos[0],  -self.screen.get_width()*self.zoom +self.screen.get_width()))
-        self.camera_pos[1] = min(0,max(self.camera_pos[1],-self.screen.get_height()*self.zoom + self.screen.get_height()))
+            self.camera_pos[1] += dif_y * smooth_factor
+            
+         
+        # max and min camera pos
+        self.camera_pos[0] = min(0,max(self.camera_pos[0],  -scaled_surface.get_width() +self.screen.get_width()))
+        self.camera_pos[1] = min(0,max(self.camera_pos[1],  -scaled_surface.get_height() +self.screen.get_height()))
         return scaled_surface,self.camera_pos
     
