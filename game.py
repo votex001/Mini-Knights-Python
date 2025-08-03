@@ -5,8 +5,9 @@ from phisics import Physics
 from menus.pause import create_pause, run_pause
 from camera import Camera
 
-def init_game(screen,first_level,player_folder,imgs_map):
-    camera_surface = pygame.Surface((screen.get_width(), screen.get_height()))
+def init_game(map_width,map_height,first_level,player_folder,imgs_map):
+    
+    camera_surface = pygame.Surface((map_width, map_height))
     level = level_loader.SelectLevel(first_level, camera_surface)
     physics = Physics(level)
     player = Player(player_folder,imgs_map, level.get_spawn(), physics, camera_surface)

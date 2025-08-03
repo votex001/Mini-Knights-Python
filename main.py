@@ -8,8 +8,10 @@ pygame.init()
 
 # setup settings
 ZOOM = 3
-SCREEN_WIDTH = 960
-SCREEN_HEIGHT = 480
+SCREEN_WIDTH = 1300
+SCREEN_HEIGHT = 600
+MAP_WIDTH = 960
+MAP_HEIGHT = 480
 GAME_NAME = "Mini Knights"
 GAME_ICON = "imgs/icon.png"
 FIRST_LVL = "SelectLevel/maps/lvl1.tmx"
@@ -43,7 +45,7 @@ in_game = False # game state
 while running:
     if in_game:
         # game init
-        level, physics, player, camera_surface = init_game(screen,FIRST_LVL,CHARACTER_FOLDER,IMGS_MAP)
+        level, physics, player, camera_surface = init_game(MAP_WIDTH,MAP_HEIGHT,FIRST_LVL,CHARACTER_FOLDER,IMGS_MAP)
 
         #  start game
         in_game = run_game(level, physics, player, camera_surface, screen,ZOOM)
