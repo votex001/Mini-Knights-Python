@@ -45,6 +45,10 @@ class Animation:
 
         return frames, rect_frame
         
+    def reset_animation(self, animation_name):
+        self.animation_indices[animation_name] = 0
+        self.last_update_times[animation_name] = pygame.time.get_ticks()
+
 
     def next_frame(self, animation_name, lookSide="right"):
         frames, rect_frame = self.load(animation_name, lookSide)
@@ -56,7 +60,7 @@ class Animation:
         if animation_name not in self.animation_indices:
             self.animation_indices[animation_name] = 0
             self.last_update_times[animation_name] = now
-
+   
         current_index = self.animation_indices[animation_name]
         is_last_frame = False
 

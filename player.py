@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.img,self.rect_img,_ = self.animation.next_frame('idle',self.last_move_side)
         self.rect = self.rect_img.get_rect()
         self.mask = pygame.mask.from_surface(self.img)
+        self.jump_animation = False
 
         # on init spawn Player
         self.spawn_pos = spawn_pos
@@ -37,7 +38,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = (self.x, self.y)
         self.surface.blit(self.img, self.rect)
 
-    def update_animation(self):
+    def update_animation(self,collisions):
+
+
+        
+
+        
+
+
         # anim side priority
         if self.moving_left:
             self.last_move_side = "left"
@@ -48,8 +56,10 @@ class Player(pygame.sprite.Sprite):
             self.img,_,last_frame = self.animation.next_frame("attack",self.last_move_side)
             if last_frame:
                 self.attack = False
-        elif self.player_y_momentum < 0:
-            self.img,_,_ = self.animation.next_frame("jump",self.last_move_side)
+        elif self.jump_animation:
+            self.img,_,last_frame = self.animation.next_frame("jump",self.last_move_side)
+            if last_frame:
+                self.jump_animation = False
         elif  self.moving_right:
             self.img,_,_ = self.animation.next_frame("run",self.last_move_side)
         elif self.moving_left:
@@ -66,7 +76,6 @@ class Player(pygame.sprite.Sprite):
 
     # listen to player moves
     def handle_input(self,events):
-        self.update_animation()
         player_movement =[0,0]
         if self.moving_right:
             player_movement[0] += self.SPEED
@@ -80,10 +89,12 @@ class Player(pygame.sprite.Sprite):
         player_rect, collisions = self.physics.move(self.rect, player_movement)
         if collisions['bottom']:
             self.players_jumps = self.JUMP_LEFT
+            self.jump_animation = False
         if collisions['top']:
             self.player_y_momentum = 1
         self.surface.blit(self.img,player_rect)
 
+        self.update_animation(collisions)
 
         for event in events: # event loop
             if event.type == KEYDOWN:
@@ -95,6 +106,8 @@ class Player(pygame.sprite.Sprite):
                     self.moving_left = True
                 if event.key == K_w:
                    if self.players_jumps >0:
+                    self.animation.reset_animation("jump")
+                    self.jump_animation = True
                     self.player_y_momentum = -self.JUMP_HEIGHT
                     self.players_jumps -=1
             if event.type == KEYUP:
