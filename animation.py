@@ -40,7 +40,7 @@ class Animation:
             frame = self.scale_img(pygame.image.load(f'{self.path}/{animation_name}/{i+1}.png').convert_alpha(), lookSide)
             frames.append(frame)
 
-        rect_frame = frames[rect_frame_num] 
+        rect_frame = frames[rect_frame_num-1] 
         self.cashed_frames[cache_key] = (frames, rect_frame)
 
         return frames, rect_frame
@@ -50,7 +50,7 @@ class Animation:
         self.last_update_times[animation_name] = pygame.time.get_ticks()
 
 
-    def next_frame(self, animation_name, lookSide="right"):
+    def next_frame(self, animation_name, lookSide="right",once = False):
         frames, rect_frame = self.load(animation_name, lookSide)
         if not frames:
             return None
@@ -71,8 +71,11 @@ class Animation:
 
             if next_index == 0:
                 is_last_frame = True
-
+            prev_index = current_index
             current_index = next_index
+            if next_index == 0 and once:
+                current_index = prev_index
+                self.animation_indices[animation_name] = prev_index
 
         return frames[current_index], rect_frame, is_last_frame
 
