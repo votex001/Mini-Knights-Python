@@ -1,0 +1,11 @@
+ZOOM = 3
+SCREEN_WIDTH = 1300
+SCREEN_HEIGHT = 600
+MAP_WIDTH = 960
+MAP_HEIGHT = 480
+GAME_NAME = "Mini Knights"
+GAME_ICON = "imgs/icon.png"
+FIRST_LVL = "SelectLevel/maps/lvl1.tmx"
+CHARACTER_IMG = "character/Soldier.png"
+CHARACTER_FOLDER = "character/animations"
+IMGS_MAP ={"idle":(6,1),'attack':(6,4),'die':(12,12),'jump':(16,1),'run':(8,1)}

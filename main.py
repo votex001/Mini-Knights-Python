@@ -2,23 +2,9 @@
 import pygame
 from menus.menu import create_menu, run_menu
 from game import init_game, run_game
-
+from settings import *
 
 pygame.init()
-
-# setup settings
-ZOOM = 3
-SCREEN_WIDTH = 1300
-SCREEN_HEIGHT = 600
-MAP_WIDTH = 960
-MAP_HEIGHT = 480
-GAME_NAME = "Mini Knights"
-GAME_ICON = "imgs/icon.png"
-FIRST_LVL = "SelectLevel/maps/lvl1.tmx"
-CHARACTER_IMG = "character/Soldier.png"
-CHARACTER_FOLDER = "character/animations"
-# {"folderName":(totalImgsNum,imgNum for Rect)}
-IMGS_MAP ={"idle":(6,1),'attack':(6,4),'die':(12,12),'jump':(16,1),'run':(8,1)}
 
 # setup screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
