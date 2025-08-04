@@ -46,7 +46,8 @@ class Player(pygame.sprite.Sprite):
         self.attack = False
         self.player_y_momentum = 0
 
-    def reload_player_vue(self):
+    def reset_player_vue(self):
+        self.last_move_side = "right"
         self.img,self.rect_img,_ = self.animation.next_frame('idle',self.last_move_side)
         self.rect = self.rect_img.get_rect()
         self.mask = pygame.mask.from_surface(self.img)
