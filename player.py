@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from animation import Animation
-
+import time
 class Player(pygame.sprite.Sprite):
     def __init__(self, imgs_path,imgs_map, spawn_pos, physics, surface):
         super().__init__()
@@ -45,10 +45,17 @@ class Player(pygame.sprite.Sprite):
         self.attack = False
         self.player_y_momentum = 0
 
-    def spawn(self):
-        self.x, self.y = self.spawn_pos if self.spawn_pos else (0, 0)
+    def reload_player_vue(self):
+        self.img,self.rect_img,_ = self.animation.next_frame('idle',self.last_move_side)
+        self.rect = self.rect_img.get_rect()
+        self.mask = pygame.mask.from_surface(self.img)
         self.rect.topleft = (self.x, self.y)
         self.surface.blit(self.img, self.rect)
+
+
+    def spawn(self):
+        self.x, self.y = self.spawn_pos if self.spawn_pos else (0, 0)
+        self.reload_player_vue()
         self.player_is_alive = True
         self.after_dead_anim = False
 
@@ -81,11 +88,14 @@ class Player(pygame.sprite.Sprite):
                 img_rect.midbottom = self.rect.midbottom
                 self.rect = img_rect
                 if last_frame:
+                    self.animation.reset_animation("die")
                     self.after_dead_anim = True
+                    time.sleep(3)
+                    self.spawn()
     # if player dies
     def die(self):
             self.player_is_alive = False
-            self.reset_moves()
+            self.reset_moves()       
 
     # reset player movement
     def reset_moves(self):
@@ -104,7 +114,9 @@ class Player(pygame.sprite.Sprite):
         if self.player_y_momentum > self.MAX_FALL_SPEED:
             self.player_y_momentum = self.MAX_FALL_SPEED
 
-        player_rect, collisions = self.physics.move(self.rect, player_movement)
+        player_rect, collisions,player_damaged_by_deathzone = self.physics.move(self.rect, player_movement)
+        if player_damaged_by_deathzone:
+            self.die()
         if collisions['bottom']:
             self.players_jumps = self.JUMP_LEFT
             self.jump_animation = False
