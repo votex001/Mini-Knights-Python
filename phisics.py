@@ -1,7 +1,7 @@
 import pytmx
 import pygame
 
-
+# collisions and fall physic
 class Physics:
     def __init__(self, level):
         self.level = level
