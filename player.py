@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
 
         # dead animation
         self.player_is_alive = False
-        self.death_timе = None
+        self.death_time = None
         #for after dies control connection use this
         self.after_dead_anim = False
 
@@ -51,7 +51,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.rect_img.get_rect()
         self.mask = pygame.mask.from_surface(self.img)
         self.rect.topleft = (self.x, self.y)
-        self.surface.blit(self.img, self.rect)
 
 
     def spawn(self):
