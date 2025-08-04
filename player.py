@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
 
         # dead animation
         self.player_is_alive = False
+        self.death_timе = None
         #for after dies control connection use this
         self.after_dead_anim = False
 
@@ -88,12 +89,17 @@ class Player(pygame.sprite.Sprite):
                 img_rect.midbottom = self.rect.midbottom
                 self.rect = img_rect
                 if last_frame:
-                    self.animation.reset_animation("die")
-                    self.after_dead_anim = True
-                    time.sleep(3)
-                    self.spawn()
+                    now = pygame.time.get_ticks()
+                    if now - self.death_time >= 3000:  # 3000 мс = 3 секунды
+                        self.animation.reset_animation("die")
+                        self.death_timе = None
+                        self.after_dead_anim = True
+                        self.spawn()
     # if player dies
     def die(self):
+        # anti loop dead
+        if self.player_is_alive:
+            self.death_time = pygame.time.get_ticks()
             self.player_is_alive = False
             self.reset_moves()       
 
