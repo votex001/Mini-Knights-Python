@@ -1,9 +1,9 @@
 import pygame
 
 class Camera:
-    def __init__(self,camera_surface,player_rect,screen,zoom):
+    def __init__(self,camera_surface,player,screen,zoom):
         self.camera_surface = camera_surface
-        self.player_rect = player_rect
+        self.player = player
         self.screen = screen
         self.zoom = zoom
         self.camera_pos = [0,0]
@@ -17,8 +17,8 @@ class Camera:
             (self.camera_surface.get_width() * self.zoom, self.camera_surface.get_height() * self.zoom))
         
         # if to put this params on camera player will be on the center 
-        player_pos_x = (-self.player_rect.x * self.zoom) + self.screen.get_width() / 2
-        player_pos_y = (-self.player_rect.y*self.zoom)+self.screen.get_height()/2
+        player_pos_x = (-self.player.rect.x * self.zoom) + self.screen.get_width() / 2
+        player_pos_y = (-self.player.rect.y*self.zoom)+self.screen.get_height()/2
 
         # dif between cam and player
         dif_x = player_pos_x - self.camera_pos[0]
