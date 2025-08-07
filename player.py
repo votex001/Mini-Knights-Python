@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from animation import Animation
 class Player(pygame.sprite.Sprite):
-    def __init__(self, imgs_path,imgs_map, spawn_pos, physics, surface):
+    def __init__(self, imgs_path,imgs_map, level, physics, surface):
         super().__init__()
         # player params
         self.SPEED = 5
@@ -12,6 +12,8 @@ class Player(pygame.sprite.Sprite):
         self.MAX_FALL_SPEED = 5
         self.DAMAGE = 5
 
+        # level class
+        self.level = level
 
         # dead animation
         self.player_is_alive = False
@@ -35,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_animation = False
 
         # on init spawn Player
-        self.spawn_pos = spawn_pos
+        self.spawn_pos = self.level.get_spawn()
         self.spawn()
 
         # player movement
@@ -113,7 +115,8 @@ class Player(pygame.sprite.Sprite):
         player_damaged_by_deathzone = self.physics.deathzone_touch_check(self.rect)
         player_exit_touch = self.physics.exit_touch_check(self.rect)
 
-        
+        if player_exit_touch:
+            self.level.draw_exit_title()
 
 
         player_movement =[0,0]
