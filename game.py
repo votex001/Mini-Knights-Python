@@ -41,9 +41,9 @@ def run_game(level, physics, player, camera_surface, screen):
                     pause_menu = create_pause(screen, start_game, quit_game)
                     paused = not paused # toggle pause state
 
-        screen.fill((0, 0, 0))  # clear the screen
         scaled_surface,pos=camera.prepare_scaled_surface()
         
+        screen.fill((0, 0, 0))  # clear the screen
         screen.blit(scaled_surface,pos)
         # pause logic
         if not paused:
@@ -61,5 +61,6 @@ def run_game(level, physics, player, camera_surface, screen):
 
         pygame.display.update()
         clock.tick(GAME_FPS)
+        print(clock.get_fps())
     return go_to_menu
 
