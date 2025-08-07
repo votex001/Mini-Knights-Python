@@ -61,6 +61,5 @@ def run_game(level, physics, player, camera_surface, screen):
 
         pygame.display.update()
         clock.tick(GAME_FPS)
-        print(clock.get_fps())
     return go_to_menu
 
