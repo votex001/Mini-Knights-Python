@@ -12,7 +12,7 @@ def init_game():
     camera_surface = pygame.Surface((MAP_WIDTH, MAP_HEIGHT))
     level = level_loader.SelectLevel(CURRENT_LVL, camera_surface)
     physics = Physics(level)
-    player = Player(CHARACTER_FOLDER,IMGS_MAP, level.get_spawn(), physics, camera_surface)
+    player = Player(CHARACTER_FOLDER,IMGS_MAP, level, physics, camera_surface)
     return level, physics, player, camera_surface
 
 def run_game(level, physics, player, camera_surface, screen):
@@ -60,6 +60,6 @@ def run_game(level, physics, player, camera_surface, screen):
         # physics.draw_walkable_tiles(camera_surface)
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(GAME_FPS)
     return go_to_menu
 
