@@ -102,6 +102,21 @@
     <property name="walk" type="bool" value="true"/>
    </properties>
   </tile>
+  <tile id="124">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="125">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="126">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
   <tile id="130">
    <properties>
     <property name="walk" type="bool" value="true"/>
@@ -267,6 +282,21 @@
     <property name="walk" type="bool" value="true"/>
    </properties>
   </tile>
+  <tile id="188">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="189">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="190">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
   <tile id="194">
    <properties>
     <property name="walk" type="bool" value="true"/>
@@ -300,6 +330,21 @@
   <tile id="235">
    <properties>
     <property name="walk" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="252">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="253">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="254">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="263">
@@ -380,6 +425,21 @@
   <tile id="299">
    <properties>
     <property name="walk" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="316">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="317">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="318">
+   <properties>
+    <property name="exit" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="322">
@@ -2120,13 +2180,6 @@
   <object id="14" x="36.8529" y="247.358" width="18.5455" height="20.2045">
    <properties>
     <property name="spawn" type="bool" value="true"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="17" name="exit">
-  <object id="9" x="871.333" y="184" width="33.3333" height="55.3333">
-   <properties>
-    <property name="exit" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
