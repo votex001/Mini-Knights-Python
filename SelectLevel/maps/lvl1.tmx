@@ -110,6 +110,7 @@
   <tile id="125">
    <properties>
     <property name="exit" type="bool" value="true"/>
+    <property name="top_center" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="126">
