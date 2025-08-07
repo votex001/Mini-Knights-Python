@@ -1,9 +1,9 @@
 import pygame
 
 class Animation:
-    def __init__(self, path = 'character/animations', imgs_map = None, frame_duration=50):
+    def __init__(self, path = 'character/animations', imgs_map = None, frame_duration=50,SCALE_FACTOR = 1):
 
-        self.SCALE_FACTOR = 0.8
+        self.SCALE_FACTOR = SCALE_FACTOR
 
 
 
