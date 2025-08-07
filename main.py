@@ -7,7 +7,7 @@ from settings import *
 pygame.init()
 
 # setup screen
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.SCALED|pygame.RESIZABLE|pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.FULLSCREEN)
 pygame.display.set_caption(GAME_NAME)
 icon = pygame.image.load(GAME_ICON)
 pygame.display.set_icon(icon)
