@@ -52,11 +52,23 @@ class Physics:
                             heated = True
         return heated
 
+    def exit_touch_check(self,player_rect):
+        heated = False
+        tile_width = self.level.tmx_data.tilewidth
+        tile_height = self.level.tmx_data.tileheight
 
+        for layer in self.level.tmx_data.visible_layers:
+            if isinstance(layer,pytmx.TiledTileLayer):
+                for x,y,gid in layer:
+                    tile_props = self.level.tmx_data.get_tile_properties_by_gid(gid)
+                    if tile_props and tile_props.get('exit') == True:
+                        tile_rect = pygame.Rect(x*tile_width,y*tile_height,tile_width,tile_height)
+                        if player_rect.colliderect(tile_rect):
+                            heated = True
+        return heated
 
     def move(self,player_rect,player_movement):
         collision_types = {"top":False,"bottom":False,"right":False,"left":False}
-        player_damaged_by_deathzone = self.deathzone_touch_check(player_rect)
         
         # X
         player_rect.x += player_movement[0] # [x,y]
@@ -79,4 +91,4 @@ class Physics:
             elif player_movement[1]<0:
                 player_rect.top = tile.bottom
                 collision_types["top"] = True
-        return player_rect,collision_types,player_damaged_by_deathzone
+        return player_rect,collision_types

@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 from animation import Animation
-import time
 class Player(pygame.sprite.Sprite):
     def __init__(self, imgs_path,imgs_map, spawn_pos, physics, surface):
         super().__init__()
@@ -56,7 +55,7 @@ class Player(pygame.sprite.Sprite):
 
     def spawn(self):
         self.x, self.y = self.spawn_pos if self.spawn_pos else (0, 0)
-        self.reload_player_vue()
+        self.reset_player_vue()
         self.player_is_alive = True
         self.after_dead_anim = False
 
@@ -109,7 +108,14 @@ class Player(pygame.sprite.Sprite):
 
 
     # listen to player moves
-    def handle_input(self,events):    
+    def handle_input(self,events):
+        # other collisions
+        player_damaged_by_deathzone = self.physics.deathzone_touch_check(self.rect)
+        player_exit_touch = self.physics.exit_touch_check(self.rect)
+
+        
+
+
         player_movement =[0,0]
         if self.moving_right:
             player_movement[0] += self.SPEED
@@ -119,8 +125,8 @@ class Player(pygame.sprite.Sprite):
         self.player_y_momentum += self.Fall_SPEED
         if self.player_y_momentum > self.MAX_FALL_SPEED:
             self.player_y_momentum = self.MAX_FALL_SPEED
-
-        player_rect, collisions,player_damaged_by_deathzone = self.physics.move(self.rect, player_movement)
+        # check ho player touches tiles for move collision and return sides
+        player_rect, collisions = self.physics.move(self.rect, player_movement)
         if player_damaged_by_deathzone:
             self.die()
         if collisions['bottom']:
