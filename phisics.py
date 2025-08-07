@@ -20,8 +20,8 @@ class Physics:
 
     def _get_tiles_rects(self):
         rects = []
-        tile_width = self.level.tmx_data.tilewidth
-        tile_height = self.level.tmx_data.tileheight
+        tile_width = self.level.tile_width
+        tile_height = self.level.tile_height
         for x, y in self.walkable_tiles:
             rects.append(pygame.Rect(x * tile_width, y * tile_height, tile_width, tile_height))
         return rects
@@ -39,8 +39,8 @@ class Physics:
     
     def deathzone_touch_check(self,player_rect):
         heated =False
-        tile_width = self.level.tmx_data.tilewidth
-        tile_height = self.level.tmx_data.tileheight
+        tile_width = self.level.tile_width
+        tile_height = self.level.tile_height
 
         for layer in self.level.tmx_data.visible_layers:
             if isinstance(layer,pytmx.TiledTileLayer):
@@ -54,8 +54,8 @@ class Physics:
 
     def exit_touch_check(self,player_rect):
         heated = False
-        tile_width = self.level.tmx_data.tilewidth
-        tile_height = self.level.tmx_data.tileheight
+        tile_width = self.level.tile_width
+        tile_height = self.level.tile_height
 
         for layer in self.level.tmx_data.visible_layers:
             if isinstance(layer,pytmx.TiledTileLayer):
