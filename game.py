@@ -4,22 +4,24 @@ from player import Player
 from phisics import Physics
 from menus.pause import create_pause, run_pause
 from camera import Camera
+from settings import *
 
-def init_game(map_width,map_height,first_level,player_folder,imgs_map):
+
+def init_game():
     
-    camera_surface = pygame.Surface((map_width, map_height))
-    level = level_loader.SelectLevel(first_level, camera_surface)
+    camera_surface = pygame.Surface((MAP_WIDTH, MAP_HEIGHT))
+    level = level_loader.SelectLevel(CURRENT_LVL, camera_surface)
     physics = Physics(level)
-    player = Player(player_folder,imgs_map, level.get_spawn(), physics, camera_surface)
+    player = Player(CHARACTER_FOLDER,IMGS_MAP, level.get_spawn(), physics, camera_surface)
     return level, physics, player, camera_surface
 
-def run_game(level, physics, player, camera_surface, screen,zoom):
+def run_game(level, physics, player, camera_surface, screen):
     clock = pygame.time.Clock()
     running = True # main game loop
     paused = False # pause state
     go_to_menu = True # flag to return to menu
     pause_menu = None #enable pause menu
-    camera = Camera(camera_surface,player,screen,zoom)
+    camera = Camera(camera_surface,player,screen)
     def start_game():
         nonlocal paused
         paused = False # resume game

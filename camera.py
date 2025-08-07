@@ -1,11 +1,12 @@
 import pygame
+from settings import *
 
 class Camera:
-    def __init__(self,camera_surface,player,screen,zoom):
+    def __init__(self,camera_surface,player,screen):
         self.camera_surface = camera_surface
         self.player = player
         self.screen = screen
-        self.zoom = zoom
+        self.zoom = ZOOM
         self.camera_pos = [0,0]
        
 

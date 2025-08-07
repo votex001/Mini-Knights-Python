@@ -31,10 +31,10 @@ in_game = False # game state
 while running:
     if in_game:
         # game init
-        level, physics, player, camera_surface = init_game(MAP_WIDTH,MAP_HEIGHT,FIRST_LVL,CHARACTER_FOLDER,IMGS_MAP)
+        level, physics, player, camera_surface = init_game()
 
         #  start game
-        in_game = run_game(level, physics, player, camera_surface, screen,ZOOM)
+        in_game = run_game(level, physics, player, camera_surface, screen)
     else:
         # menu loop
         run_menu(screen, menu)
