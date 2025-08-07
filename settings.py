@@ -9,4 +9,4 @@ CURRENT_LVL = "SelectLevel/maps/lvl1.tmx"
 CHARACTER_IMG = "character/Soldier.png"
 CHARACTER_FOLDER = "character/animations"
 IMGS_MAP ={"idle":(6,1),'attack':(6,4),'die':(12,12),'jump':(16,1),'run':(8,1)}
-GAME_FPS = 120
+GAME_FPS = 60

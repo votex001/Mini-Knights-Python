@@ -7,6 +7,8 @@ class Physics:
         self.level = level
         self.walkable_tiles = self._get_walkable_tiles()
         self.tiles_rects = self._get_tiles_rects()
+        self.deadzonerects = []
+        self.heatedrecs = []
 
     def _get_walkable_tiles(self):
         walkable = []
@@ -41,30 +43,34 @@ class Physics:
         heated =False
         tile_width = self.level.tile_width
         tile_height = self.level.tile_height
-
-        for layer in self.level.tmx_data.visible_layers:
-            if isinstance(layer,pytmx.TiledTileLayer):
-                for x,y,gid in layer:
-                    tile_props = self.level.tmx_data.get_tile_properties_by_gid(gid)
-                    if tile_props and tile_props.get('deathzone') == True:
-                        tiles_rect = pygame.Rect(x*tile_width,y*tile_height,tile_width,tile_height)
-                        if player_rect.colliderect(tiles_rect):
-                            heated = True
+        if not self.deadzonerects:
+            for layer in self.level.tmx_data.visible_layers:
+                if isinstance(layer,pytmx.TiledTileLayer):
+                    for x,y,gid in layer:
+                        tile_props = self.level.tmx_data.get_tile_properties_by_gid(gid)
+                        if tile_props and tile_props.get('deathzone') == True:
+                            tiles_rect = pygame.Rect(x*tile_width,y*tile_height,tile_width,tile_height)
+                            self.deadzonerects.append(tiles_rect)
+        for tiles_rect in self.deadzonerects:
+            if player_rect.colliderect(tiles_rect):
+                heated = True
         return heated
 
     def exit_touch_check(self,player_rect):
         heated = False
         tile_width = self.level.tile_width
         tile_height = self.level.tile_height
-
-        for layer in self.level.tmx_data.visible_layers:
-            if isinstance(layer,pytmx.TiledTileLayer):
-                for x,y,gid in layer:
-                    tile_props = self.level.tmx_data.get_tile_properties_by_gid(gid)
-                    if tile_props and tile_props.get('exit') == True:
-                        tile_rect = pygame.Rect(x*tile_width,y*tile_height,tile_width,tile_height)
-                        if player_rect.colliderect(tile_rect):
-                            heated = True
+        if not self.heatedrecs:
+            for layer in self.level.tmx_data.visible_layers:
+                if isinstance(layer,pytmx.TiledTileLayer):
+                    for x,y,gid in layer:
+                        tile_props = self.level.tmx_data.get_tile_properties_by_gid(gid)
+                        if tile_props and tile_props.get('exit') == True:
+                            tile_rect = pygame.Rect(x*tile_width,y*tile_height,tile_width,tile_height)
+                            self.heatedrecs.append(tile_rect)
+        for tile_rect in self.heatedrecs:                    
+            if player_rect.colliderect(tile_rect):
+                heated = True
         return heated
 
     def move(self,player_rect,player_movement):
