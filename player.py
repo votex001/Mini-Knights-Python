@@ -7,10 +7,11 @@ class Player(pygame.sprite.Sprite):
         # player params
         self.SPEED = 5
         self.JUMP_LEFT = 2
-        self.JUMP_HEIGHT = 8
+        self.JUMP_HEIGHT = 7
         self.Fall_SPEED = 0.4
         self.MAX_FALL_SPEED = 5
         self.DAMAGE = 5
+        self.PLAYER_HEIGHT = 0.5
 
         # level class
         self.level = level
@@ -30,7 +31,7 @@ class Player(pygame.sprite.Sprite):
         self.last_move_side = "right"
 
         # player Img and Rect
-        self.animation = Animation(imgs_path,imgs_map)
+        self.animation = Animation(imgs_path,imgs_map,SCALE_FACTOR=self.PLAYER_HEIGHT)
         self.img,self.rect_img,_ = self.animation.next_frame('idle',self.last_move_side)
         self.rect = self.rect_img.get_rect()
         self.mask = pygame.mask.from_surface(self.img)
